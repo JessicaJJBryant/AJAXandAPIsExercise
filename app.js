@@ -65,8 +65,14 @@ fourth.append(p7);
 // 4a. Using Axios, Async/await, and the "Episode by Number" endpoint/URL display the name of the final episode in season two of "The Mandalorian" TV show as the inner text for the p7 variable/element. Also, use tvMazeFunc for the name of the async function you create. If done correctly the name of the episode should display on the webpage. (NOTE: Don't forget to run the tvMazeFunc function)(Hint: id is 38963).
 const baseURL = `https://api.tvmaze.com`;
 const endpoint = `/shows/38963/episodebynumber?`;
+// OR const id = `38963`;
+// const endpoint = `/shows/${id}/episodebynumber?`;
 const queryString = `season=2&number=8`;
+// OR const season = `2`;
+// const number = `8`;
+// const queryString = `season=${season}&number=${number}`;
 const fullEndpoint = baseURL + endpoint + queryString;
+// same as const fullEndpoint = `https://api.tvmaze.com/shows/38963/episodebynumber?season=2&number=8`;
 tvMazeFunc = async () => { 
     try {
         const episode = await axios.get(fullEndpoint);
@@ -80,4 +86,26 @@ tvMazeFunc = async () => {
 }
 tvMazeFunc();
 
+// 5. Use the Poke API (https://pokeapi.co/) to display an image of Pikachu below the fourth div on the webpage
+const img = document.createElement(`img`);
+const body = document.querySelector(`body`);
+axios.get(`https://pokeapi.co/api/v2/pokemon/pikachu`)
+.then(res => {
+    console.log(`Question five was successful`);
+    console.log(res);
+    console.log(res.data.sprites.front_default);
+    img.src = res.data.sprites.front_default;
+    body.append(img);
+})
+.catch(err => {
+    console.log(`Question Five was NOT successful.`);
+    console.log(err);
+});
+// OR USING ASYNC AWAIT (without the try and the catch, which should be used):
+// async function getPokemon(){
+//     const pikachu = await axios.get(`https://pokeapi.co/api/v2/pokemon/pikachu`);
+//     img.src = pikachu.data.sprites.front_default;
+//     body.append(img);
+// }
+// getPokemon();
 
